@@ -17,9 +17,9 @@ class ChatSyncService
     public function syncMessages(Chat $chat, array $messages): void
     {
         foreach ($messages as $message) {
-            $chat->messages()->create($message);
+            $addedMessage = $chat->messages()->create($message);
 
-            broadcast(new MessageSent($message))->toOthers();
+            broadcast(new MessageSent($addedMessage))->toOthers();
         }
     }
 }

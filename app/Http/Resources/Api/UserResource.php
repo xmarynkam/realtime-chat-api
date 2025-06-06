@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Api;
 
-use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Chat
+ * @mixin User
  */
-class ChatResource extends JsonResource
+class UserResource extends JsonResource
 {
-    public static $wrap = 'chat';
+    public static $wrap = 'user';
 
     /**
      * Transform the resource into an array.
@@ -24,9 +24,9 @@ class ChatResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'creatorId' => $this->creator_id,
-            'participants' => UserResource::collection($this->whenLoaded('participants')),
-            'messages' => MessageResource::collection($this->whenLoaded('messages')),
+            'firstName' => $this->first_name,
+            'lastName' => $this->last_name,
+            'email' => $this->email,
             'createdAt' => $this->created_at,
         ];
     }

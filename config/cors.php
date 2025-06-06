@@ -15,9 +15,9 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout'],
+    'paths' => ['api/*', 'broadcasting/auth'],
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['http://realtime-chat-client.test:5175'],
+    'allowed_origins' => [env('CORS_ALLOWED_ORIGINS')],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],

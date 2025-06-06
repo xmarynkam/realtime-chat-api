@@ -14,7 +14,7 @@ class CreateMessageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth('api')->check();
     }
 
     /**
@@ -25,7 +25,10 @@ class CreateMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'chat_id' => 'required|exists:chats,id',
+            'sender_id' => 'required|integer|exists:users,id',
+            'receiver_id' => 'required|integer|exists:users,id',
+            'message' => 'required|string|max:1000',
         ];
     }
 }

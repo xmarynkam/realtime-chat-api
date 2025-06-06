@@ -37,20 +37,24 @@ final class ChatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateChatRequest $request): ChatResource
+    public function store(CreateChatRequest $request): JsonResponse
     {
-        $chat = DB::transaction(function () use ($request) {
+        $messages = $request->array('messages');
+
+        $chat = DB::transaction(function () use ($request, $messages) {
             $chat = $this->chatService->createChat();
 
             $this->chatSyncService->syncParticipants($chat, $request->array('participant_ids'));
-            $this->chatSyncService->syncMessages($chat, $request->array('messages'));
+            $this->chatSyncService->syncMessages($chat, $messages);
 
             return $chat;
         });
 
         $chat->load(['participants', 'messages']);
 
-        return ChatResource::make($chat);
+        return response()->json([
+            'chat' => new ChatResource($chat),
+        ]);
     }
 
     /**

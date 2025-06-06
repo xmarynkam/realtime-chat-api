@@ -24,13 +24,15 @@ final class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateMessageRequest $request): MessageResource
+    public function store(CreateMessageRequest $request): JsonResponse
     {
         $message = $this->messageService->createMessage($request->validated());
 
         broadcast(new MessageSent($message))->toOthers();
 
-        return MessageResource::make($message);
+        return response()->json([
+            'message' => MessageResource::make($message),
+        ]);
     }
 
     /**

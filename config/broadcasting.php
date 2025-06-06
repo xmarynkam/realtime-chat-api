@@ -17,6 +17,10 @@ return [
 
     'default' => env('BROADCAST_CONNECTION', 'null'),
 
+    'guards' => [
+        'sanctum',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Broadcast Connections

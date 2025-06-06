@@ -23,7 +23,7 @@ class ChatService
     public function createChat(): Chat
     {
         return Chat::create([
-            'user_id' => auth()->id(),
+            'creator_id' => auth()->id(),
         ]);
     }
 
